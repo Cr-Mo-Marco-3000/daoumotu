@@ -5,8 +5,8 @@
 void graph(struct StockInfo **dateArr, int max, int min);
 void stockDescription(struct StockInfo **dateArr);
 
-void main() {
-	char stock_code[10] = "207940";									// 차후 넘어올 것 
+void stock_detail() {
+	char stock_code[10];									// 차후 넘어올 것 
 	int cnt = 0;
 
 	int max = 0, min = 1000000000;
@@ -15,6 +15,11 @@ void main() {
 	char *ptr;
 
 	struct StockInfo *dateArr[20];						// 날짜별 정보를 담을 구조체 배열
+
+	printf("종목 코드를 입력해주세요.\n");
+	scanf("%s", stock_code);
+	while (getchar() != '\n');
+
 
 	fp = fopen("data/output.txt", "r");
 	if (fp == NULL) {

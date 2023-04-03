@@ -15,6 +15,14 @@ int main(void)
 
 	int choose;
 
+	// 주식 배열 리스트
+	StockInfo stockInfoList[500];
+
+
+	// 주식 배열 담는 함수
+	hope_function(stockInfoList);			
+	
+
 	//  파일을 구조체 배열에 담기
 	StockInfo tmp[600] = { 0 };
 	Stock stock[100] = { 0 };
@@ -96,15 +104,14 @@ int main(void)
 			while (getchar() != '\n');
 
 			if (choose == 1) {
-				// 여기 주식 목록 조회
+				print_function(stockInfoList);
 			} else if (choose == 2) {
-				// 여기 주식 상세 정보 조회
+				stock_detail();
 			} else if (choose == 3) {
 				// 여기 주식 매매가 들어가면 됩니다.
-				
 				//trade(&user);
 			} else if (choose == 4) {
-				// 여기 주식 매매내역 검색이 들어가면 됩니다.
+				tradesearch();
 			} else if (choose == 5) {
 				portfolio(user, stock, tmp);
 				// 여기 포트폴리오 보기가 들어가면 됩니다.
@@ -118,35 +125,7 @@ int main(void)
 				Sleep(1000);
 			}
 		}
-
-
-	
 	}
 	
-
-	// 포트폴리오 확인 함수
-	
-
-	
-	// 주식 정보 검색 함수
-
-	// 주식 매매내역 검색 함수
-
-	// 매매함수
-	/*STOCK_USER stock_usr[5] = { {4, "009150",7},
-						   {4, "105560",15},
-						   {4, "051900",5},
-						   {4, "035420",10},
-						   {4, "068270",1}
-	};
-
-	trade(&user,stock_usr, stock_lst);
-
-	printf("%s, %d, %d, 로직끝", user.name, user.userNo, user.balance);
-
-	printf("%d", 10);
-	*/
-	// 로그아웃 함수
- 
 	return 0;
 }
