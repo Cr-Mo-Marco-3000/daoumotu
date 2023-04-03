@@ -1,36 +1,14 @@
 #include "../../hdr/generic.h"
 #include "../../hdr/built_in_library.h"
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
-//
-//typedef struct Trade {
-//    char date[11];
-//    int type;
-//    char code[11];
-//    int amount;
-//    int price;
-//}Trade;
-//
-//
-//typedef struct User {
-//    int userNo;
-//    char name[31];
-//    int balance;
-//} USER;
-
 #define MAX_LINE_LENGTH 100
 #define MAX_TRADES 1024
 
-// 구조체 정의
-
 
 // 함수 선언
-void readTrades(char* filename, struct Trade* trades, int* numTrades);
-void searchTrades(int searchType, Trade* trades, int numTrades);
 
-int main() {
+
+void tradesearch() {
     char filename[] = "data/tradelist.txt";
     Trade trades[MAX_TRADES]; // 최대 1024개의 매매내역을 저장하는 구조체 배열
     int numTrades = 40; // 실제 저장된 매매내역의 개수
@@ -48,7 +26,6 @@ int main() {
     // 매매내역 검색
     searchTrades(searchType, trades, numTrades);
 
-    return 0;
 }
 
 // tradelist.txt 파일에서 매매내역을 읽어서 trades 구조체 배열에 저장하는 함수

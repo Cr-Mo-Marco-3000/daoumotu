@@ -5,6 +5,13 @@
 * 이 헤더파일에는, 여러 소스파일에서 사용될 구조체, 함수 원형이 선언되어 있습니다.
 */
 
+
+/* 매크로 상수 */
+
+#define STOCK_ALL_CNT 30
+#define MAX_LINE_LENGTH 100
+#define MAX_TRADES 1024
+
 /*
 구조체 선언문입니다.
 */
@@ -44,30 +51,18 @@ typedef struct StockInfo {
 	int volume;
 } StockInfo;
 
-//<<<<<<< HEAD
-//typedef struct Stock_user_Array
-//{
-//	int size;
-//	int max_size;
-//	EMPLOYEE *stackArrayP;
-//} STOCK_USER_ARRAY, *LPSTOCK_USER_ARRAY;
-//=======
 typedef struct Stock_user_Array
 {
 	int size;
 	int max_size;
 	Stock *stackArrayP;
 } STOCK_USER_ARRAY, *LPSTOCK_USER_ARRAY;
-//>>>>>>> f5e0f2848d3177e36d5b3ba52bdeff7197b7a600
-
 
 /*
 공용 함수에 대한 함수 원형입니다.
 */
 void checkStringLength(char *msg, char *string, int size);
 void num_check(char *msg, int max, int min, int *f_addr);
-
-#define STOCK_ALL_CNT 30
 
 
 
@@ -81,3 +76,9 @@ void signup(USER *userP);
 void logout(USER *userP);
 void loadList(USER **user, USER **head, USER **tail);
 
+void hope_function(StockInfo *structptr);
+void print_function(StockInfo *structptr);
+
+void tradesearch();
+void readTrades(char *filename, struct Trade *trades, int *numTrades);
+void searchTrades(int searchType, struct Trade *trades, int numTrades);
