@@ -8,13 +8,13 @@
 // 함수 선언
 
 
-void tradesearch() {
+void tradesearch(USER *user) {
     char filename[] = "data/tradelist.txt";
     Trade trades[MAX_TRADES]; // 최대 1024개의 매매내역을 저장하는 구조체 배열
     int numTrades = 40; // 실제 저장된 매매내역의 개수
 
     // 매매내역 파일(tradelist.txt)을 읽어서 trades 구조체 배열에 저장
-    readTrades(filename, trades, &numTrades);
+    readTrades(filename, trades, &numTrades, user);
 
     // 검색할 타입 입력받기
     int searchType;
@@ -29,7 +29,7 @@ void tradesearch() {
 }
 
 // tradelist.txt 파일에서 매매내역을 읽어서 trades 구조체 배열에 저장하는 함수
-void readTrades(char* filename, struct Trade* trades, int* numTrades) {
+void readTrades(char* filename, struct Trade* trades, int* numTrades, USER *user) {
     FILE* fp;
     char line[MAX_LINE_LENGTH];
     char* token;
@@ -47,7 +47,7 @@ void readTrades(char* filename, struct Trade* trades, int* numTrades) {
     while (fgets(line, MAX_LINE_LENGTH, fp) != NULL) {
             token = strtok(line, " \t"); //회원번호 버리기
 
-        if (atoi(token) == 1) //1을 임의의 회원번호로 준 거라서 이걸 회원번호 넘겨 줄 때 userNo 변수로 바꿔 줘야 함
+        if (atoi(token) == 1)
         {
             token = strtok(NULL, " \t");
             strcpy(trades[*numTrades].code, token);
@@ -92,8 +92,10 @@ void searchTrades(int searchType, struct Trade* trades, int numTrades) {
 
         for (i = 0; i < numTrades; i++) {
             if (strcmp(trades[i].date, inputDate) == 0) {
-                //printf("%s", trades[i].date);
+                printf("\n");
+                printf("회원님이 매매한 해당 일자의 종목은 다음과 같습니다. \n");
                 printf("종목번호: %s, 날짜: %s, 거래수량: %d, 거래가격: %d, 매매타입: %d \n", trades[i].code, trades[i].date, trades[i].amount, trades[i].price, trades[i].type);
+                printf("\n");
                 found = 1;
             }
         }
@@ -112,7 +114,10 @@ void searchTrades(int searchType, struct Trade* trades, int numTrades) {
 
         for (i = 0; i < numTrades; i++) {
             if (trades[i].type == tradetype) {
+                printf("\n");
+                printf("선택하신 매매타입과 일치하는 정보는 다음과 같습니다. \n");
                 printf("종목번호: %s, 날짜: %s, 거래수량: %d, 거래가격: %d, 매매타입: %d \n", trades[i].code, trades[i].date, trades[i].amount, trades[i].price, trades[i].type);
+                printf("\n");
                 found = 1;
             }
         }
@@ -131,8 +136,11 @@ void searchTrades(int searchType, struct Trade* trades, int numTrades) {
 
         for (i = 0; i < numTrades; i++) {
             if (strcmp(trades[i].code, tradecode) == 0) {
+                printf("\n");
+                printf("회원님이 매매한 해당 종목은 다음과 같습니다. \n");
                 printf("종목번호: %s, 날짜: %s, 거래수량: %d, 거래가격: %d, 매매타입: %d \n", trades[i].code, trades[i].date, trades[i].amount, trades[i].price, trades[i].type);
                 found = 1;
+                printf("\n");
             }
         }
 
