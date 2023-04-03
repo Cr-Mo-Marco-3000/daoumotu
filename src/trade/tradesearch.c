@@ -92,8 +92,10 @@ void searchTrades(int searchType, struct Trade* trades, int numTrades) {
 
         for (i = 0; i < numTrades; i++) {
             if (strcmp(trades[i].date, inputDate) == 0) {
-                //printf("%s", trades[i].date);
+                printf("\n");
+                printf("회원님이 매매한 해당 일자의 종목은 다음과 같습니다. \n");
                 printf("종목번호: %s, 날짜: %s, 거래수량: %d, 거래가격: %d, 매매타입: %d \n", trades[i].code, trades[i].date, trades[i].amount, trades[i].price, trades[i].type);
+                printf("\n");
                 found = 1;
             }
         }
@@ -112,7 +114,10 @@ void searchTrades(int searchType, struct Trade* trades, int numTrades) {
 
         for (i = 0; i < numTrades; i++) {
             if (trades[i].type == tradetype) {
+                printf("\n");
+                printf("선택하신 매매타입과 일치하는 정보는 다음과 같습니다. \n");
                 printf("종목번호: %s, 날짜: %s, 거래수량: %d, 거래가격: %d, 매매타입: %d \n", trades[i].code, trades[i].date, trades[i].amount, trades[i].price, trades[i].type);
+                printf("\n");
                 found = 1;
             }
         }
@@ -131,8 +136,11 @@ void searchTrades(int searchType, struct Trade* trades, int numTrades) {
 
         for (i = 0; i < numTrades; i++) {
             if (strcmp(trades[i].code, tradecode) == 0) {
+                printf("\n");
+                printf("회원님이 매매한 해당 종목은 다음과 같습니다. \n");
                 printf("종목번호: %s, 날짜: %s, 거래수량: %d, 거래가격: %d, 매매타입: %d \n", trades[i].code, trades[i].date, trades[i].amount, trades[i].price, trades[i].type);
                 found = 1;
+                printf("\n");
             }
         }
 

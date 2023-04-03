@@ -4,7 +4,9 @@
 
 
 void print_function(StockInfo *structptr) {
-	int i;
+		printf("================================================================\n");
+		printf("종목코드  종목명  날짜  종가   전일비   시가  고가  저가  거래량\n");
+		printf("================================================================\n");
 	for (int i = 0; i < 400; i++)
 	{
 		printf("%s %s %s %d %d %d %d %d %d\n",
@@ -18,4 +20,5 @@ void print_function(StockInfo *structptr) {
 			structptr[i].low,
 			structptr[i].volume);
 	}
+	printf("================================================================\n");
 }
