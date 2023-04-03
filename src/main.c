@@ -5,23 +5,24 @@
 
 int main(void) 
 {	
-	USER user = { -1 };
-	int choose;
+	USER usertemp = { -1 }; // 임시 더미 회원
+	
+	USER *user;
 
-	// 전체 주식 종목번호 배열 생성
-	//char stock_lst[STOCK_ALL_CNT][50];
-	//stock_usr_array(stock_lst);
+	user = &usertemp;
+
+	USER *start = NULL, *end = NULL;		// 회원 연결 리스트의 시작과 끝 주소 
+
+	int choose;
 
 	// 전체 루프
 	while (1) {
-		if (user.userNo == -1) {	// 로그인이 안 된 상태
-
+		if (user->userNo == -1) {	// 로그인이 안 된 상태
 			printf("서비스에 연결하려면 1, 종료하려면 2를 입력해주세요.\n");
 			choose = getchar();
-
 			while (getchar() != '\n');
 			if (choose == '1') {
-				auth(&user);
+				auth(user);
 			} else if (choose == '2') {
 				printf("이용해 주셔서 감사합니다. 안녕히 가십시오.\n");
 				Sleep(500);
@@ -31,6 +32,7 @@ int main(void)
 				Sleep(1000);
 			}
 		} else {
+			loadList(&user, &start, &end);							// 유저 정보 연결 리스트 만드는 함수
 			puts("이용하실 서비스를 선택해 주세요");
 			printf("==================================\n");
 			printf("1. 주식 목록 조회\n");
@@ -68,8 +70,11 @@ int main(void)
 				portfolio(&user);
 				// 여기 포트폴리오 보기가 들어가면 됩니다.
 			} else if (choose == 0) {
-				
-				logout(&user);
+				// 여기 저장이 들어가야 함
+				saveList(start);
+				// 다음으로는 유저 포인터 초기화 및 HEAD 초기화
+				user = &usertemp;
+				start = end = NULL;			// 다시 로그인 시, 유저 배열을 만들기위해 NULL로 바꿔줌
 				puts("로그아웃합니다.");
 				Sleep(1000);
 			}

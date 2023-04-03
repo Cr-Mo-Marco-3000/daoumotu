@@ -10,11 +10,12 @@
 */
 typedef struct User {
 	int userNo;
+	char id[31];
+	char password[31];
 	char name[31];
 	int balance;
+	struct User *next;
 } USER;
-
-
 
 typedef struct Trade {
 	char date[11];
@@ -43,6 +44,12 @@ typedef struct StockInfo {
 	int volume;
 } StockInfo;
 
+typedef struct Stock_user_Array
+{
+	int size;
+	int max_size;
+	EMPLOYEE *stackArrayP;
+} STOCK_USER_ARRAY, *LPSTOCK_USER_ARRAY;
 
 
 /*
@@ -63,5 +70,5 @@ void auth(USER *userP);
 void login(USER *userP);
 void signup(USER *userP);
 void logout(USER *userP);
-
+void loadList(USER **user, USER **head, USER **tail);
 
