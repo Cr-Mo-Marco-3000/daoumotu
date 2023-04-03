@@ -17,9 +17,9 @@ typedef struct User {
 */
 
 
-void loadList(USER** user, USER **head, USER **tail) {
+void loadList(USER** user, USER **head, USER **tail) {	// user에는, 포인터를 가리키는 포인터가 담김, 현재 그 포인터는 userTemp를 가리키고 있음, userTemp를 검사해서, 
 	char tmp[200];
-	USER * ptr;
+	USER *ptr;
 	FILE *fp;
 	fp = fopen("data/user.txt", "r");
 	
@@ -34,7 +34,6 @@ void loadList(USER** user, USER **head, USER **tail) {
 			perror("메모리 부족");
 			exit(1);
 		}
-
 		if (fgets(tmp, 100, fp) == NULL) {			// 파일의 끝 => break
 			break;
 		} else {									// 아니면 위에서 생성한 구조체에 정보를 저장
@@ -124,7 +123,7 @@ void auth(USER *userP) {
 void login(USER *userP) {
 	char id[31];
 	char password[31];
-	char tmp[100];
+	char tmp[200];
 	FILE *fp;
 	char *ptr;
 	int flag = 0;
@@ -142,8 +141,8 @@ void login(USER *userP) {
 			perror("Error");
 			exit(1);
 		}
-
-		while (fgets(tmp, 100, fp)) {
+		
+		while (fgets(tmp, 200, fp) != NULL) {
 			ptr = strtok(tmp, "\t");
 			if (!strcmp(strtok(NULL, "\t"), id) && !strcmp(strtok(NULL, "\t"), password)) {
 				userP->userNo = cnt;

@@ -9,7 +9,7 @@ int main(void)
 	
 	USER *user;
 
-	user = &usertemp;
+	user = NULL;
 
 	USER *start = NULL, *end = NULL;		// 회원 연결 리스트의 시작과 끝 주소 
 
@@ -50,6 +50,8 @@ int main(void)
 		i++;
 	}
 	i = 0;
+	
+
 	while (1)
 	{
 		int cn;
@@ -60,14 +62,17 @@ int main(void)
 	}
 	//구조체 배열 담아오기 끝
 
+	fclose(st);
+	fclose(pr);
 	// 전체 루프
 	while (1) {
-		if (user->userNo == -1) {	// 로그인이 안 된 상태
+		if (start == NULL) {	// 로그인이 안 된 상태
 			printf("서비스에 연결하려면 1, 종료하려면 2를 입력해주세요.\n");
 			choose = getchar();
 			while (getchar() != '\n');
 			if (choose == '1') {
 				auth(user);
+				loadList(&user, &start, &end);							// 유저 정보 연결 리스트 만드는 함수
 			} else if (choose == '2') {
 				printf("이용해 주셔서 감사합니다. 안녕히 가십시오.\n");
 				Sleep(500);
@@ -77,7 +82,6 @@ int main(void)
 				Sleep(1000);
 			}
 		} else {
-			loadList(&user, &start, &end);							// 유저 정보 연결 리스트 만드는 함수
 			puts("이용하실 서비스를 선택해 주세요");
 			printf("==================================\n");
 			printf("1. 모든 주식 정보 조회\n");
@@ -109,11 +113,13 @@ int main(void)
 				// 여기 주식 매매가 들어가면 됩니다.
 				//trade(&user);
 			} else if (choose == 4) {
-				tradesearch();
+				tradesearch(user);
 			} else if (choose == 5) {
 				portfolio(user, stock, tmp);
 				// 여기 포트폴리오 보기가 들어가면 됩니다.
 			} else if (choose == 0) {
+
+
 				// 여기 저장이 들어가야 함
 				saveList(start);
 				// 다음으로는 유저 포인터 초기화 및 HEAD 초기화

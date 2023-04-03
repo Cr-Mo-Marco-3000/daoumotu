@@ -13,11 +13,12 @@ void stock_detail() {
 	char tmp[200];
 	FILE *fp;
 	char *ptr;
-
+	int flag=1;
 	struct StockInfo *dateArr[20];						// 날짜별 정보를 담을 구조체 배열
 
 	printf("종목 코드를 입력해주세요.\n");
 	scanf("%s", stock_code);
+
 	while (getchar() != '\n');
 
 
@@ -32,6 +33,7 @@ void stock_detail() {
 		}
 		ptr = strtok(tmp, "\t");
 		if (!strcmp(ptr, stock_code)) {						// 만약 종목코드가 동일하면 가져옴
+			flag = 0;
 			dateArr[cnt] = (struct StockInfo *)malloc(sizeof(StockInfo));
 			strcpy(dateArr[cnt]->stock_code, ptr);				// 종목코드 저장
 			
@@ -57,6 +59,11 @@ void stock_detail() {
 			}
 		}
 
+	if (flag) {
+		printf("찾으시는 주식 종목이 존재하지 않습니다.");
+		Sleep(1000);
+		return;
+	}
 
 	graph(dateArr, max, min);					// 그래프 그려주는 함수
 

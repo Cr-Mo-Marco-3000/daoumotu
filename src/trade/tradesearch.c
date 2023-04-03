@@ -8,13 +8,13 @@
 // 함수 선언
 
 
-void tradesearch() {
+void tradesearch(USER *user) {
     char filename[] = "data/tradelist.txt";
     Trade trades[MAX_TRADES]; // 최대 1024개의 매매내역을 저장하는 구조체 배열
     int numTrades = 40; // 실제 저장된 매매내역의 개수
 
     // 매매내역 파일(tradelist.txt)을 읽어서 trades 구조체 배열에 저장
-    readTrades(filename, trades, &numTrades);
+    readTrades(filename, trades, &numTrades, user);
 
     // 검색할 타입 입력받기
     int searchType;
@@ -29,7 +29,7 @@ void tradesearch() {
 }
 
 // tradelist.txt 파일에서 매매내역을 읽어서 trades 구조체 배열에 저장하는 함수
-void readTrades(char* filename, struct Trade* trades, int* numTrades) {
+void readTrades(char* filename, struct Trade* trades, int* numTrades, USER *user) {
     FILE* fp;
     char line[MAX_LINE_LENGTH];
     char* token;
@@ -47,7 +47,7 @@ void readTrades(char* filename, struct Trade* trades, int* numTrades) {
     while (fgets(line, MAX_LINE_LENGTH, fp) != NULL) {
             token = strtok(line, " \t"); //회원번호 버리기
 
-        if (atoi(token) == 1) //1을 임의의 회원번호로 준 거라서 이걸 회원번호 넘겨 줄 때 userNo 변수로 바꿔 줘야 함
+        if (atoi(token) == user->userNo) //1을 임의의 회원번호로 준 거라서 이걸 회원번호 넘겨 줄 때 userNo 변수로 바꿔 줘야 함
         {
             token = strtok(NULL, " \t");
             strcpy(trades[*numTrades].code, token);
