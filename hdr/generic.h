@@ -14,11 +14,7 @@ typedef struct User {
 	int balance;
 } USER;
 
-typedef struct Stock_user {
-	int userNo;
-	int stock_id;
-	int stock_cnt;
-} STOCK_USER;
+
 
 typedef struct Trade {
 	char date[11];

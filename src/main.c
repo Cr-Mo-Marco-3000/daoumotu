@@ -61,8 +61,10 @@ int main(void)
 			} else if (choose == 4) {
 				// 여기 주식 매매내역 검색이 들어가면 됩니다.
 			} else if (choose == 5) {
+				portfolio(&user);
 				// 여기 포트폴리오 보기가 들어가면 됩니다.
 			} else if (choose == 0) {
+				
 				logout(&user);
 				puts("로그아웃합니다.");
 				Sleep(1000);
@@ -72,16 +74,18 @@ int main(void)
 
 	
 	}
-	/*
+	
 
 	// 포트폴리오 확인 함수
+	
 
+	
 	// 주식 정보 검색 함수
 
 	// 주식 매매내역 검색 함수
 
 	// 매매함수
-	STOCK_USER stock_usr[5] = { {4, "009150",7},
+	/*STOCK_USER stock_usr[5] = { {4, "009150",7},
 						   {4, "105560",15},
 						   {4, "051900",5},
 						   {4, "035420",10},

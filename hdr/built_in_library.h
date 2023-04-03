@@ -4,4 +4,4 @@
 #include <string.h>
 #include <stdlib.h>
 #include <windows.h>
-#include <vld.h>
+//#include <vld.h>

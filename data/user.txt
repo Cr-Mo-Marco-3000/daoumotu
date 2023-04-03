@@ -4,3 +4,4 @@
 4	daou_jjo	daou4	jeongdaou	10000000
 5	daou_ktk	daou5	kimtaekyoung	10000000
 6	daou_hgh	daou6	hangunhee	10000000
+7	kk2522	ss2522	dfdfd	10000000
