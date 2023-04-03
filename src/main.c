@@ -62,8 +62,7 @@ int main(void)
 				// 여기 주식 상세 정보 조회
 			} else if (choose == 3) {
 				// 여기 주식 매매가 들어가면 됩니다.
-				
-				trade(&user);
+				//trade(&user);
 			} else if (choose == 4) {
 				// 여기 주식 매매내역 검색이 들어가면 됩니다.
 			} else if (choose == 5) {
