@@ -111,7 +111,7 @@ int main(void)
 				stock_detail();
 			} else if (choose == 3) {
 				// 여기 주식 매매가 들어가면 됩니다.
-				trade(&user);
+				trade(user,stock, tmp);
 			} else if (choose == 4) {
 				tradesearch(user);
 			} else if (choose == 5) {
