@@ -63,7 +63,7 @@ int portfolio(USER* user)   // 가인수로 회원번호 받아온다. 포트폴리오 시작함수
 
 
 	
-	Print_bal(user);
+	Print_bal(stock,tmp,user);
 	Print_st(stock,tmp,user);
 
 }
@@ -98,52 +98,35 @@ void Print_st(Stock* stock, StockInfo* price, USER* user) // 보유주식수 출력
 
 }
 
-void Print_bal(USER* user) // 잔고 및 수익률 표시
+void Print_bal(Stock *stock,StockInfo *price,USER* user) // 잔고 및 수익률 표시
 {
-	printf("\n보유현금 %d원 추가\n", user->balance);
-	StockInfo tmp;
-	Stock stock;
-	int sum = 0;
-	FILE* st, * pr;
-	char trs[200];
 
-	st = fopen("data/stock.txt", "rt");
-	if (st == NULL) {
-		perror("ERROR");
-	}
-	pr = fopen("data/output.txt", "rt");
-	if (pr == NULL) {
-		perror("ERROR");
-	}
-	fgets(trs, 200, pr);
+	int sum = 0, cn, i;
 
-	while (1)
+	i = 0;
+	while (stock[i].member_num)
 	{
-		int cn;
-		cn = fscanf(st, "%d %s %d", &stock.member_num, stock.code, &stock.quantity);  // stock 구조체에 잔고데이터를 담음
-		if (cn != 3)
-			break;
-		if (stock.member_num == user->userNo) //  입력한 id 와 일치하는 경우를 찾으면
+		
+		
+		if (stock[i].member_num == user->userNo) //  입력한 id 와 일치하는 경우를 찾으면
 		{
+			cn = 0;
 
 			while (1)
 			{
-				cn = fscanf(pr, "%s %s %s %d %d %d %d %d %d", tmp.stock_code,
-					tmp.stock_name, tmp.date, &tmp.open, &tmp.compare, &tmp.high, &tmp.low, &tmp.close, &tmp.volume); // tmp에 일별 시세데이터를 담고
-				if (cn != 9)
-					break;
 
-				if (!strcmp(stock.code, tmp.stock_code)) // 시세데이터와 잔고데이터의 코드가 일치하는 경우를 찾으면
+				if (!strcmp(stock[i].code, price[cn].stock_code)) // 시세데이터와 잔고데이터의 코드가 일치하는 경우를 찾으면
 				{
-					sum += tmp.open * stock.quantity; // 잔고에 계산해서 넣어줌
-					printf("현재가 %7d %15s가(이) %3d주 합 : %d\n", tmp.open, tmp.stock_name, stock.quantity, tmp.open *
-						stock.quantity);
+					sum += price[cn].open * stock[i].quantity; // 잔고에 계산해서 넣어줌
+					printf("현재가 %7d %15s가(이) %3d주 합 : %d\n", price[cn].open, price[cn].stock_name, stock[i].quantity, price[cn].open *
+						stock[i].quantity);
 					break;
 				}
 
-
+				cn++;
 			}
 		}
+		i++;
 
 	}
 	cashplus(&sum, user);
@@ -169,8 +152,6 @@ void Print_bal(USER* user) // 잔고 및 수익률 표시
 	textcolor(7);
 	printf("=======================================================\n");
 
-	fclose(st);
-	fclose(pr);
 }
 
 

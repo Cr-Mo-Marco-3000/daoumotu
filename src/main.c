@@ -67,7 +67,7 @@ int main(void)
 			} else if (choose == 4) {
 				// 여기 주식 매매내역 검색이 들어가면 됩니다.
 			} else if (choose == 5) {
-				portfolio(&user);
+				portfolio(user);
 				// 여기 포트폴리오 보기가 들어가면 됩니다.
 			} else if (choose == 0) {
 				// 여기 저장이 들어가야 함
