@@ -7,6 +7,89 @@ void login(USER *userP);
 void signup(USER *userP);
 void logout(USER *userP);
 
+
+/*
+typedef struct User {
+	int userNo;
+	char name[31];
+	int balance;
+} USER;
+*/
+
+
+void loadList(USER** user, USER **head, USER **tail) {
+	char tmp[200];
+	USER * ptr;
+	FILE *fp;
+	fp = fopen("data/user.txt", "r");
+	
+	if (fp == NULL) {
+		perror("Error");
+		exit(1);
+	}
+
+	while (1) {
+		ptr = (USER *)malloc(sizeof(USER));			// 구조체 동적할당
+		if (ptr == NULL) {
+			perror("메모리 부족");
+			exit(1);
+		}
+
+		if (fgets(tmp, 100, fp) == NULL) {			// 파일의 끝 => break
+			break;
+		} else {									// 아니면 위에서 생성한 구조체에 정보를 저장
+			ptr->userNo = atoi(strtok(tmp, "\t"));
+			strcpy(ptr->id, strtok(NULL, "\t"));
+			strcpy(ptr->password, strtok(NULL, "\t"));
+			strcpy(ptr->name, strtok(NULL, "\t"));
+			ptr->balance = atoi(strtok(NULL, "\t"));
+			if (ptr->userNo == (*user)->userNo) {
+				*user = ptr;
+			}
+		}
+
+		ptr->next = NULL;
+
+		if (*head == NULL) {						// 만약 head에 없으면
+			*head = *tail = ptr;
+		}
+		else {
+			(*tail)->next = ptr;
+			(*tail) = ptr;
+		}
+	}
+
+	fclose(fp);
+	free(ptr);
+
+}
+
+void saveList(USER *node) {
+	FILE *fp;
+	USER *prev;
+	fp = fopen("data/user.txt", "w");
+
+	if (fp == NULL) {
+		perror("Error");
+		exit(1);
+	}
+	while (1) {
+		if (node->next == NULL) {
+			fprintf(fp, "%d\t%s\t%s\t%s\t%d", node->userNo, node->id, node->password, node->name, node->balance);
+			free(node);
+			break;
+		} else {
+			fprintf(fp, "%d\t%s\t%s\t%s\t%d\n", node->userNo, node->id, node->password, node->name, node->balance);
+		}
+		prev = node;
+		node = node->next;
+		free(prev);
+	}
+
+	fclose(fp);
+}
+
+
 void auth(USER *userP) {
 	char tmp[250]; // 버퍼
 	int tempUserno; // 회원번호 저장할 변수
@@ -73,7 +156,6 @@ void login(USER *userP) {
 		}
 		if (flag) {
 			printf("로그인 완료!\n");
-			printf("%d, %s, %d\n", userP->userNo, userP->name, userP->balance);
 			puts("");
 
 		}

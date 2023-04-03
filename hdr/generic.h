@@ -10,15 +10,12 @@
 */
 typedef struct User {
 	int userNo;
+	char id[31];
+	char password[31];
 	char name[31];
 	int balance;
+	struct User *next;
 } USER;
-
-typedef struct Stock_user {
-	int userNo;
-	int stock_id;
-	int stock_cnt;
-} STOCK_USER;
 
 typedef struct Trade {
 	char date[11];
@@ -67,5 +64,5 @@ void auth(USER *userP);
 void login(USER *userP);
 void signup(USER *userP);
 void logout(USER *userP);
-
+void loadList(USER **user, USER **head, USER **tail);
 
