@@ -9,7 +9,7 @@ int main(void)
 	
 	USER *user;
 
-	user = NULL;
+	user = &usertemp;
 
 	USER *start = NULL, *end = NULL;		// 회원 연결 리스트의 시작과 끝 주소 
 
