@@ -147,6 +147,7 @@ int main(void)
 	printf("%d", 10);
 	*/
 	// 로그아웃 함수
- 
+	fclose(st);
+	fclose(pr);
 	return 0;
 }
