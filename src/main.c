@@ -15,6 +15,45 @@ int main(void)
 
 	int choose;
 
+	//  파일을 구조체 배열에 담기
+	StockInfo tmp[600] = { 0 };
+	Stock stock[100] = { 0 };
+	FILE* st, * pr;
+	char trs[200];
+	st = fopen("data/stock.txt", "rt");
+	if (st == NULL) {
+		perror("ERROR");
+	}
+
+
+	pr = fopen("data/output.txt", "rt");
+	if (pr == NULL) {
+		perror("ERROR");
+	}
+
+	fgets(trs, 200, pr);
+	int i = 0;
+	while (1)
+	{
+		int cn;
+		cn = fscanf(pr, "%s %s %s %d %d %d %d %d %d", tmp[i].stock_code, // id와 일치하면 tmp 구조체에 일별 시세데이터를 입력
+			tmp[i].stock_name, tmp[i].date, &tmp[i].open, &tmp[i].compare, &tmp[i].high, &tmp[i].low, &tmp[i].close, &tmp[i].volume);
+		if (cn != 9)
+			break;
+		i++;
+	}
+	i = 0;
+	while (1)
+	{
+		int cn;
+		cn = fscanf(st, "%d %s %d", &stock[i].member_num, stock[i].code, &stock[i].quantity);
+		if (cn != 3)
+			break;
+
+		i++;
+	}
+	//구조체 배열 담아오기 끝
+
 	// 전체 루프
 	while (1) {
 		if (user->userNo == -1) {	// 로그인이 안 된 상태
@@ -67,7 +106,7 @@ int main(void)
 			} else if (choose == 4) {
 				// 여기 주식 매매내역 검색이 들어가면 됩니다.
 			} else if (choose == 5) {
-				portfolio(user);
+				portfolio(user, stock, tmp);
 				// 여기 포트폴리오 보기가 들어가면 됩니다.
 			} else if (choose == 0) {
 				// 여기 저장이 들어가야 함

@@ -12,7 +12,7 @@ void textcolor(int colorNum) {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorNum);
 }
 
-int portfolio(USER* user)   // 가인수로 회원번호 받아온다. 포트폴리오 시작함수
+int portfolio(USER* user, Stock *stock ,StockInfo *tmp)   // 가인수로 회원번호 받아온다. 포트폴리오 시작함수
 {
 
 	int id = user->userNo; // 가인수로 넣을 값
@@ -24,45 +24,8 @@ int portfolio(USER* user)   // 가인수로 회원번호 받아온다. 포트폴리오 시작함수
 	printf("=======================================================\n");
 	printf("%d의 주식\n", user->userNo);
 
-	StockInfo tmp[600] = { 0 };
-	Stock stock[100] = { 0 };
-	FILE* st, * pr;
-	char trs[200];
-	st = fopen("data/stock.txt", "rt");
-	if (st == NULL) {
-		perror("ERROR");
-	}
-
-
-	pr = fopen("data/output.txt", "rt");
-	if (pr == NULL) {
-		perror("ERROR");
-	}
 	
-	fgets(trs, 200, pr);
-	int i = 0;
-	while (1)
-	{
-		int cn;
-		cn = fscanf(pr, "%s %s %s %d %d %d %d %d %d", tmp[i].stock_code, // id와 일치하면 tmp 구조체에 일별 시세데이터를 입력
-			tmp[i].stock_name, tmp[i].date, &tmp[i].open, &tmp[i].compare, &tmp[i].high, &tmp[i].low, &tmp[i].close, &tmp[i].volume);
-		if (cn != 9)
-			break;
-		i++;
-		}
-	i = 0;
-	while (1)
-	{
-		int cn;
-		cn = fscanf(st, "%d %s %d", &stock[i].member_num, stock[i].code, &stock[i].quantity);
-		if (cn != 3)
-			break;
 
-		i++;
-	}
-
-
-	
 	Print_bal(stock,tmp,user);
 	Print_st(stock,tmp,user);
 
