@@ -44,6 +44,12 @@ typedef struct StockInfo {
 	int volume;
 } StockInfo;
 
+typedef struct Stock_user_Array
+{
+	int size;
+	int max_size;
+	EMPLOYEE *stackArrayP;
+} STOCK_USER_ARRAY, *LPSTOCK_USER_ARRAY;
 
 
 /*
