@@ -76,7 +76,6 @@ void signup(USER *userP);
 void logout(USER *userP);
 void loadList(USER **user, USER **head, USER **tail);
 
-void hope_function(StockInfo *structptr);
 void print_function(StockInfo *structptr);
 
 void tradesearch();

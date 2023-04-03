@@ -20,7 +20,6 @@ int main(void)
 
 
 	// 주식 배열 담는 함수
-	hope_function(stockInfoList);			
 	
 
 	//  파일을 구조체 배열에 담기
@@ -57,7 +56,6 @@ int main(void)
 		cn = fscanf(st, "%d %s %d", &stock[i].member_num, stock[i].code, &stock[i].quantity);
 		if (cn != 3)
 			break;
-
 		i++;
 	}
 	//구조체 배열 담아오기 끝
@@ -82,8 +80,8 @@ int main(void)
 			loadList(&user, &start, &end);							// 유저 정보 연결 리스트 만드는 함수
 			puts("이용하실 서비스를 선택해 주세요");
 			printf("==================================\n");
-			printf("1. 주식 목록 조회\n");
-			printf("서비스에 등록된 모든 주식을 조회합니다.\n");
+			printf("1. 모든 주식 정보 조회\n");
+			printf("서비스에 등록된 모든 주식의 20일치 정보를 조회합니다.\n");
 			putchar('\n');
 			printf("2. 주식 상세 정보 조회\n");
 			printf("종목 코드를 입력하여 주식 상세 정보를 조회합니다.\n");
@@ -104,7 +102,7 @@ int main(void)
 			while (getchar() != '\n');
 
 			if (choose == 1) {
-				print_function(stockInfoList);
+				print_function(tmp);
 			} else if (choose == 2) {
 				stock_detail();
 			} else if (choose == 3) {
