@@ -81,3 +81,5 @@ void print_function(StockInfo *structptr);
 void tradesearch();
 void readTrades(char *filename, struct Trade *trades, int *numTrades);
 void searchTrades(int searchType, struct Trade *trades, int numTrades);
+
+void savestockholdlst(Stock* entire_usr_stock);

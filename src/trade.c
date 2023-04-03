@@ -34,16 +34,17 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 
 	while (flag_type)
 	{
+		system("cls");
 		printf("\n\n=================================================\n");
 		printf("매매 유형을 선택해주세요. \n( 1 : 매수 , 2 : 매도, 3 : 현재 주식잔고 출력, -1 : main함수로 복귀)\n");
 		printf("=================================================\n\n");
 		printf("매매 유형 선택 :     ");
-		scanf("%d%*c",&type);
+		scanf("%d%*c", &type);
 		if (type == -1)
 			return;
 		else if (type == 1)
 		{
-			buy_stock(login_usr, entire_user_stock, stock_lst);
+			buy_stock(login_usr, entire_user_stock, entire_stock_info, stock_lst);
 			flag_type = 0;
 		}
 		else if (type == 2)
@@ -53,6 +54,7 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 		}
 		else if (type == 3)
 		{
+			system("cls");
 			printf("현재 %s 님이 보유하고 계신 주식 잔고는 다음과 같습니다.\n\n", login_usr->name);
 			printf("종목번호\t보유수량");
 			printf("\n=====================================\n");
@@ -70,7 +72,7 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 }
 
 // 주식 매수 함수
-void buy_stock(USER* login_usr, Stock* entire_usr_stock, char(*stock_lst)[50])
+void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock_info, char(*stock_lst)[50])
 {
 	int buy_stock_cnt;
 	int buy_money_sum;
@@ -78,11 +80,29 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, char(*stock_lst)[50])
 	int market_price;
 	int i;
 	int buy_flag = 1;
+	int stock_entire_cnt = 0;
 	char buy_stock_num[50];
 	char date[12];
 
 	while (buy_flag)
 	{
+		system("cls");
+		printf("전체 주식 종목 리스트\n");
+		printf("\n=========================================\n");
+		printf("종목이름(종목번호)");
+		printf("\n-----------------------------------------\n");
+		i = 0;
+		while (stock_entire_cnt < STOCK_ALL_CNT)
+		{
+			if (strcmp(*stock_lst, entire_stock_info[i].stock_code) == 0)
+			{
+				printf("%s(%s)\n", *stock_lst, entire_stock_info[i].stock_name);
+				stock_lst++;
+				stock_entire_cnt++;
+			}
+			i++;
+		}
+		printf("\n-----------------------------------------\n\n");
 		printf("매수할 종목의 종목번호를 입력하시오. ( -1 : main함수로 복귀)  : ");
 		gets(buy_stock_num);
 
@@ -94,12 +114,12 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, char(*stock_lst)[50])
 			{
 				if (strcmp(buy_stock_num, stock_lst[i]) == 0)
 				{
+					system("cls");
 					printf("\n\n=====================================\n");
 					printf(" %s 님의 현재 매수가능한 금액은 %d원입니다. \n\n", login_usr->name, login_usr->balance);
 
 					printf("매수할 수량을 입력해주세요. ( 다른 주식을 거래하고 싶은 경우 수량에 0을 입력해주세요. )  : ");
 					scanf("%d%*c", &buy_stock_cnt);
-					printf("매수수량에 %d을 입력하셨습니다. \n", buy_stock_cnt);
 					{
 						if (buy_stock_cnt == 0)
 						{
@@ -111,7 +131,6 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, char(*stock_lst)[50])
 					printf("현재 시장 가격은 %d입니다. \n", market_price);
 					printf("매수를 희망하는 금액을 입력해주세요.  : ");
 					scanf("%d%*c", &buy_stock_price);
-					printf("매수희망금액에 %d을 입력하셨습니다. \n", buy_stock_price);
 					{
 						if (buy_stock_price < market_price)
 						{
@@ -148,7 +167,7 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, char(*stock_lst)[50])
 						i--;
 					}
 				}
-				if (i == (STOCK_ALL_CNT-1))
+				if (i == (STOCK_ALL_CNT - 1))
 					printf("잘못된 종목번호입니다. 다시 입력해주세요 \n");
 			} // for end
 		}// else end
@@ -171,6 +190,7 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 
 	while (sell_flag)
 	{
+		system("cls");
 		printf("현재 %s 님이 보유하고 계신 주식 잔고는 다음과 같습니다.\n\n", login_usr->name);
 		printf("종목번호\t보유수량");
 		printf("\n=====================================\n");
@@ -201,9 +221,10 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 					while (1)
 					{
 						printf("해당 주식의 현재가격은 %d입니다.\n 현재 %s 님은 해당 주식을 %d주 보유하고 있습니다.\n", market_price, login_usr->name, login_usr_stock[i].quantity);
-						printf(" 판매할 수량과 금액을 입력해주세요 : \n\t=>  ");
-						scanf("%d %d", &sell_stock_cnt, &sell_stock_price);
-
+						printf("판매할 수량을 입력해주세요 : \t");
+						scanf("%d%*c", &sell_stock_cnt);
+						printf("판매할 수량을 입력해주세요 : \t");
+						scanf("%d%*c", &sell_stock_price);
 						if (sell_stock_cnt > login_usr_stock[i].quantity)
 							printf("보유한 주식 수량이 부족하여 매도가 이루어지지 않았습니다. \n");
 						else if (sell_stock_price > market_price)
@@ -255,6 +276,7 @@ void update_stock_usr(int u_id, Stock* entire_usr_stock, char* stock_num, int st
 	int i = 0;
 
 	printf("변경 전 잔고\n");
+	printf("====================================\n");
 	for (i = 0; entire_usr_stock[i].member_num; i++)
 	{
 		printf("%d\t%s\t%d\n", entire_usr_stock[i].member_num, entire_usr_stock[i].code, entire_usr_stock[i].quantity);
@@ -262,7 +284,7 @@ void update_stock_usr(int u_id, Stock* entire_usr_stock, char* stock_num, int st
 
 	for (i = 0; entire_usr_stock[i].member_num; i++)
 	{
-		if (entire_usr_stock[i].member_num == u_id && strcmp(entire_usr_stock[i].code, stock_num) == 0 )
+		if (entire_usr_stock[i].member_num == u_id && strcmp(entire_usr_stock[i].code, stock_num) == 0)
 		{
 			if (trade_type == 1)
 				entire_usr_stock[i].quantity += stock_cnt;
@@ -278,8 +300,9 @@ void update_stock_usr(int u_id, Stock* entire_usr_stock, char* stock_num, int st
 		strcpy(entire_usr_stock[i].code, stock_num);
 		entire_usr_stock[i].quantity = stock_cnt;
 	}
-
+	printf("\n\n");
 	printf("변경 후 잔고\n");
+	printf("====================================\n");
 	for (i = 0; entire_usr_stock[i].member_num; i++)
 	{
 		printf("%d\t%s\t%d\n", entire_usr_stock[i].member_num, entire_usr_stock[i].code, entire_usr_stock[i].quantity);
@@ -408,7 +431,7 @@ void user_stock_hold_lst(USER* user, Stock* entire_user_stock, Stock* login_user
 }
 
 // 주식 전체 목록 리스트 출력
-void entire_stock_lst(StockInfo* entire_stock_info, char(* stock_lst)[50])
+void entire_stock_lst(StockInfo* entire_stock_info, char(*stock_lst)[50])
 {
 	int i = 0;
 	int cnt = 0;
@@ -422,6 +445,7 @@ void entire_stock_lst(StockInfo* entire_stock_info, char(* stock_lst)[50])
 		}
 		i++;
 	}
+	*stock_lst[cnt] = '\0';
 
 	return;
 }

@@ -39,6 +39,9 @@
     <ClCompile Include="src\trade.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\save_stock_hold_lst.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\built_in_library.h">

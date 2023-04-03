@@ -3,15 +3,15 @@
 
 
 
-int main(void) 
-{	
+int main(void)
+{
 	USER usertemp = { -1 }; // 임시 더미 회원
-	
-	USER *user;
+
+	USER* user;
 
 	user = &usertemp;
 
-	USER *start = NULL, *end = NULL;		// 회원 연결 리스트의 시작과 끝 주소 
+	USER* start = NULL, * end = NULL;		// 회원 연결 리스트의 시작과 끝 주소 
 
 	int choose;
 
@@ -20,7 +20,7 @@ int main(void)
 
 
 	// 주식 배열 담는 함수
-	
+
 
 	//  파일을 구조체 배열에 담기
 	StockInfo tmp[600] = { 0 };
@@ -50,7 +50,7 @@ int main(void)
 		i++;
 	}
 	i = 0;
-	
+
 
 	while (1)
 	{
@@ -73,15 +73,18 @@ int main(void)
 			if (choose == '1') {
 				auth(user);
 				loadList(&user, &start, &end);							// 유저 정보 연결 리스트 만드는 함수
-			} else if (choose == '2') {
+			}
+			else if (choose == '2') {
 				printf("이용해 주셔서 감사합니다. 안녕히 가십시오.\n");
 				Sleep(500);
 				exit(1);
-			} else {
+			}
+			else {
 				printf("입력이 부정확합니다. 다시 입력 부탁드립니다.\n");
 				Sleep(1000);
 			}
-		} else {
+		}
+		else {
 			puts("이용하실 서비스를 선택해 주세요");
 			printf("==================================\n");
 			printf("1. 모든 주식 정보 조회\n");
@@ -107,21 +110,27 @@ int main(void)
 
 			if (choose == 1) {
 				print_function(tmp);
-			} else if (choose == 2) {
+			}
+			else if (choose == 2) {
 				stock_detail();
-			} else if (choose == 3) {
+			}
+			else if (choose == 3) {
 				// 여기 주식 매매가 들어가면 됩니다.
-				trade(user,stock, tmp);
-			} else if (choose == 4) {
+				trade(user, stock, tmp);
+			}
+			else if (choose == 4) {
 				tradesearch(user);
-			} else if (choose == 5) {
+			}
+			else if (choose == 5) {
 				portfolio(user, stock, tmp);
 				// 여기 포트폴리오 보기가 들어가면 됩니다.
-			} else if (choose == 0) {
+			}
+			else if (choose == 0) {
 
 
 				// 여기 저장이 들어가야 함
 				saveList(start);
+				savestockholdlst(stock);
 				// 다음으로는 유저 포인터 초기화 및 HEAD 초기화
 				user = &usertemp;
 				start = end = NULL;			// 다시 로그인 시, 유저 배열을 만들기위해 NULL로 바꿔줌
@@ -130,6 +139,6 @@ int main(void)
 			}
 		}
 	}
-	
+
 	return 0;
 }
