@@ -32,23 +32,25 @@ int main(void)
 			}
 		} else {
 			puts("이용하실 서비스를 선택해 주세요");
+			printf("==================================\n");
 			printf("1. 주식 목록 조회\n");
 			printf("서비스에 등록된 모든 주식을 조회합니다.\n");
 			putchar('\n');
-			puts("2. 주식 상세 정보 조회\n");
+			printf("2. 주식 상세 정보 조회\n");
 			printf("종목 코드를 입력하여 주식 상세 정보를 조회합니다.\n");
 			putchar('\n');
-			puts("3. 주식 매매\n");
+			printf("3. 주식 매매\n");
 			printf("주식을 매매합니다.\n");
 			putchar('\n');
-			puts("4. 주식 매매내역 검색\n");
+			printf("4. 주식 매매내역 검색\n");
 			printf("내가 주식을 매매한 내역을 참고합니다.\n");
 			putchar('\n');
-			puts("5. 포트폴리오 보기\n");
+			printf("5. 포트폴리오 보기\n");
 			printf("내가 보유한 주식과 포트폴리오를 참고합니다.\n");
 			putchar('\n');
-			printf("0. 로그아웃");
-			printf("서비스에서 로그아웃합니다.");
+			printf("0. 로그아웃\n");
+			printf("서비스에서 로그아웃합니다.\n");
+			printf("==================================\n서비스 번호 입력 : ");
 			scanf("%d", &choose);
 			while (getchar() != '\n');
 
@@ -58,6 +60,8 @@ int main(void)
 				// 여기 주식 상세 정보 조회
 			} else if (choose == 3) {
 				// 여기 주식 매매가 들어가면 됩니다.
+				
+				trade(&user);
 			} else if (choose == 4) {
 				// 여기 주식 매매내역 검색이 들어가면 됩니다.
 			} else if (choose == 5) {
