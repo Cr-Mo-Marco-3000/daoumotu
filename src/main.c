@@ -85,10 +85,11 @@ int main(void)
 	while (1) {
 		if (start == NULL) {	// 로그인이 안 된 상태
 			Sleep(1000);
-			printf("\n서비스에 연결하려면 1, 종료하려면 2를 입력해주세요.\n");
+			printf("\n\t\t\t    서비스에 연결하려면 1, 종료하려면 2를 입력해주세요.\n");
 			choose = getchar();
 			while (getchar() != '\n');
 			if (choose == '1') {
+				system("cls");
 				auth(user);
 				loadList(&user, &start, &end);							// 유저 정보 연결 리스트 만드는 함수
 			}
