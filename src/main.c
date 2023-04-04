@@ -61,7 +61,7 @@ int main(void)
 	{
 		int cn;
 		cn = fscanf(pr, "%s %s %s %d %d %d %d %d %d", tmp[i].stock_code, // id와 일치하면 tmp 구조체에 일별 시세데이터를 입력
-			tmp[i].stock_name, tmp[i].date, &tmp[i].open, &tmp[i].compare, &tmp[i].high, &tmp[i].low, &tmp[i].close, &tmp[i].volume);
+			tmp[i].stock_name, tmp[i].date, &tmp[i].close, &tmp[i].compare, &tmp[i].open, &tmp[i].high, &tmp[i].low, &tmp[i].volume);
 		if (cn != 9)
 			break;
 		i++;
@@ -132,7 +132,7 @@ int main(void)
 				print_function(tmp);
 			}
 			else if (choose == 2) {
-				stock_detail();
+				stock_detail(tmp);
 			}
 			else if (choose == 3) {
 				// 여기 주식 매매가 들어가면 됩니다.
