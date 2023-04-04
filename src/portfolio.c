@@ -22,7 +22,7 @@ int portfolio(USER* user, Stock *stock ,StockInfo *tmp)   // 가인수로 회원번호 �
 
 
 	printf("=======================================================\n");
-	printf("%d의 주식\n", user->userNo);
+	printf("%s님의 주식 보유량입니다.\n", user->name);
 
 	
 
@@ -96,10 +96,10 @@ void Print_bal(Stock *stock,StockInfo *price,USER* user) // 잔고 및 수익률 표시
 	int bal = sum - 10000000;
 	if (bal >= 0)
 	{
-		printf("잔고는 %d원입니다.(+%d)\n", sum, bal);
+		printf("총 자산은 %d원입니다.(+%d)\n", sum, bal);
 	}
 	else {
-		printf("잔고는 %d원입니다.(%d)\n", sum, bal);
+		printf("총 자산은 %d원입니다.(%d)\n", sum, bal);
 	}
 
 	float ror = (sum / 10000000.0) * 100 - 100;
