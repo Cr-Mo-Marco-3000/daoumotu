@@ -112,8 +112,12 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 				{
 					system("cls");
 					printf("\n\n=====================================\n");
-					printf("%s 님의 현재 매수가능한 금액은 %d원입니다. \n\n", login_usr->name, login_usr->balance);
+					market_price = trade_price_determine(buy_stock_num, entire_stock_info);
 
+					printf("%s 님의 현재 매수가능한 금액은 %d원입니다. \n\n", login_usr->name, login_usr->balance);
+					printf("해당 주식의 현재 시장 가격은 %d입니다. \n", market_price);
+
+					printf("=====================================\n");
 					printf("매수할 수량을 입력해주세요. ( 다른 주식을 거래하고 싶은 경우 수량에 0을 입력해주세요. )  : ");
 					scanf("%d%*c", &buy_stock_cnt);
 					{
@@ -123,8 +127,7 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 						}
 					}
 
-					market_price = trade_price_determine(buy_stock_num, entire_stock_info);
-					printf("현재 시장 가격은 %d입니다. \n", market_price);
+					
 					printf("매수를 희망하는 금액을 입력해주세요.  : ");
 					scanf("%d%*c", &buy_stock_price);
 					{
