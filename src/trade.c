@@ -47,7 +47,7 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 		}
 		else if (type == 3)
 		{
-
+			sysetem("cls");
 			printf("현재 %s 님이 보유하고 계신 주식 잔고는 다음과 같습니다.\n\n", login_usr->name);
 			printf("종목번호\t보유수량");
 			printf("\n=====================================\n");
@@ -127,7 +127,11 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 					{
 						if (buy_stock_price < market_price)
 						{
+							system("cls");
+							printf("\n\n\n\n\=====================================\n");
 							printf("시장가보다 매수금액이 낮아 거래가 이루어지지 않았습니다. \n");
+							printf("===================================== \n");
+							Sleep(1500);							
 							i--;
 							continue;
 						}
@@ -159,7 +163,11 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 					}
 					else
 					{
+						system("cls");
+						printf("\n\n\n\n\=====================================\n");
 						printf(" 계좌 잔액이 부족하여 매수가 이루어지지 않았습니다. 수량과 금액을 다시 입력해주세요 \n ");
+						printf("===================================== \n");
+						Sleep(1500);						
 						i--;
 					}
 				}
@@ -229,9 +237,21 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 						printf("판매할 금액을 입력해주세요 : \t");
 						scanf("%d%*c", &sell_stock_price);
 						if (sell_stock_cnt > login_usr_stock[i].quantity)
+						{
+							system("cls");
+							printf("\n\n\n\n\=====================================\n");
 							printf("보유한 주식 수량이 부족하여 매도가 이루어지지 않았습니다. \n");
+							printf("===================================== \n");
+							Sleep(1500);
+						}
 						else if (sell_stock_price > market_price)
+						{
+							system("cls");
+							printf("\n\n\n\n\=====================================\n");
 							printf("시장가보다 매도금액이 높아, 해당 금액으로 매도가 이루어지지 않았습니다. \n");
+							printf("===================================== \n");
+							Sleep(1500);
+						}
 						else
 							break;
 					}
@@ -252,7 +272,13 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 				}// 주식번호 비교
 			} // for() end
 			if (flag_stock_match == 0)
+			{
+				system("cls");
+				printf("\n\n\n\n\=====================================\n");
 				printf("해당 주식을 보유하고 있지 않습니다.\n");
+				printf("===================================== \n");
+				Sleep(1500);
+			}
 		} // else() end
 	}//while (sell_flag) end
 }//sell_stock() end
