@@ -93,8 +93,8 @@ void auth(USER *userP) {
 	while (1) {
 
 		int oneOrTwo;
-
-		printf("모의 투자 프로그램 큠지피티\n");
+		puts("\n\n\n");
+		printf("모의 투자 프로그램 다우모투\n");
 		printf("환영합니다! 로그인(1) 혹은 회원가입(2)을 선택해 주세요! \n");
 
 		scanf("%s", tmp);
