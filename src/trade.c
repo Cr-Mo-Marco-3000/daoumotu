@@ -1,18 +1,7 @@
 #include "../hdr/generic.h"
 #include "../hdr/built_in_library.h"
 
-void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_info);
-void buy_stock(USER* login_usr, Stock* entire_usr_stock, char(*stock_lst)[50]);
-void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock, StockInfo* entire_stock_info);
-void update_stock_usr(int u_id, Stock* entire_usr_stock, char* stock_num, int stock_cnt, int trade_type);
-void update_balance(USER* login_usr, int money, int trade_type);
-void add_trade_data(int u_id, char* trade_stock_num, char* date, int trade_stock_cnt, int trade_stock_price, int trade_type);
-char* str_date_generate(char* date_var);
-void user_stock_hold_lst(USER* user, Stock* entire_user_stock, Stock* login_user_stock);
-void entire_stock_lst(StockInfo* entire_stock_info, char* stock_lst[50]);
-int trade_price_determine(char* stock_num, StockInfo* entire_stock_info);
-
-
+// 주식 매매 함수
 void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_info)
 {
 	Stock login_usr_stock[100];
@@ -78,7 +67,7 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 	}
 }
 
-// 주식 매수 함수
+// 주식 매매함수 (1) - 매수
 void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock_info, char(*stock_lst)[50])
 {
 	int buy_stock_cnt;
@@ -198,7 +187,7 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 	}//while end
 }
 
-// 주식 매도 함수
+// 주식 매매함수 (2) - 매도
 void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock, StockInfo* entire_stock_info)
 {
 	int sell_stock_cnt;
