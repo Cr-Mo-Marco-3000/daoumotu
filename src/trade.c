@@ -10,6 +10,7 @@ void add_trade_data(int u_id, char* trade_stock_num, char* date, int trade_stock
 char* str_date_generate(char* date_var);
 void user_stock_hold_lst(USER* user, Stock* entire_user_stock, Stock* login_user_stock);
 void entire_stock_lst(StockInfo* entire_stock_info, char* stock_lst[50]);
+int trade_price_determine(char* stock_num, StockInfo* entire_stock_info);
 
 
 void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_info)
@@ -19,7 +20,6 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 	entire_stock_lst(entire_stock_info, stock_lst);
 
 	int flag_type = 1;
-	char tmp[50];
 	int type;
 	int i = 0;
 	int j;
@@ -134,7 +134,7 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 						}
 					}
 
-					market_price = trade_price_determine(buy_stock_num);
+					market_price = trade_price_determine(buy_stock_num, entire_stock_info);
 					printf("현재 시장 가격은 %d입니다. \n", market_price);
 					printf("매수를 희망하는 금액을 입력해주세요.  : ");
 					scanf("%d%*c", &buy_stock_price);
@@ -201,18 +201,17 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 // 주식 매도 함수
 void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock, StockInfo* entire_stock_info)
 {
-	int usr_stock_hold_cnt, usr_stock_class_cnt, sell_stock_cnt, sell_stock_price, sell_flag = 1, flag_stock_match = 0;
+	int sell_stock_cnt;
+	int sell_stock_price;
+	int sell_money_sum;
+	int sell_flag = 1;
+	int flag_stock_match = 0;
 	int market_price;
-	int token_hold_stock_cnt;
-	char usr_stock_list[30][50], sell_stock_num[50], date[20] = "";
-	char* token_hold_stock_num;
-	char tmp[50];
-	char** hold_stock_user;
+	char sell_stock_num[50], date[20] = "";
 	int i;
 	int j;
 	int cnt;
-	int stock_entire_cnt;
-	int sell_money_sum;
+	
 
 	while (sell_flag)
 	{
@@ -251,7 +250,7 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 				if (strcmp(login_usr_stock[i].code, sell_stock_num) == 0)
 				{
 					flag_stock_match = 1;
-					market_price = trade_price_determine(sell_stock_num);
+					market_price = trade_price_determine(sell_stock_num, entire_stock_info);
 					while (1)
 					{
 						system("cls");
@@ -328,11 +327,7 @@ void update_balance(USER* login_usr, int money, int trade_type)
 // 회원 잔고 변경
 void update_stock_usr(int u_id, Stock* entire_usr_stock, char* stock_num, int stock_cnt, int trade_type)
 {
-	char tmp[200], tmp_txt[200][200], * token_stock_num, txt_line[200];
-	int token_id;
-	int token_stock_cnt;
 	int flag_unhold = 1;
-	int txt_idx = 0;
 	int i = 0;
 
 	for (i = 0; entire_usr_stock[i].member_num; i++)
@@ -380,32 +375,21 @@ void add_trade_data(int u_id, char* trade_stock_num, char* date, int trade_stock
 }
 
 // 매매가격 결정
-int trade_price_determine(char* stock_num)
+int trade_price_determine(char* stock_num, StockInfo* entire_stock_info)
 {
-	FILE* fp_stock;
-	char tmp[200], * token;
 	int market_price;
+	char stock_code[11];
+	int j = 0;
+	strcpy(stock_code, stock_num);
 
-	// 스트림 열기
-	fp_stock = fopen("data/output.txt", "rt");
-	if (fp_stock == NULL)
+	while (entire_stock_info[j].open)
 	{
-		perror("error :");
-		exit(1);
-	}
-
-	// 데이터 읽기
-	while (fgets(tmp, 200, fp_stock))
-	{
-		fgets(tmp, 100, fp_stock);
-		token = strtok(tmp, " \t");
-		if (strcmp(token, stock_num) == 0)
+		if (strcmp(stock_num, entire_stock_info[j].stock_code) == 0)
 		{
-			strtok(NULL, " \t");
-			strtok(NULL, " \t");
-			market_price = atoi(strtok(NULL, " \t"));
+			market_price = entire_stock_info[j].close;
 			break;
 		}
+		j++;
 	}
 
 	srand(time(NULL));
@@ -424,8 +408,10 @@ char* str_date_generate(char* date_var)
 	time_t curr_t;
 	struct tm* ptr;
 
-	char month_s[3], day_s[3];
-	int month, day;
+	char month_s[3];
+	char day_s[3];
+	int month;
+	int day;
 
 	curr_t = time(NULL);
 	ptr = localtime(&curr_t);
@@ -444,11 +430,6 @@ char* str_date_generate(char* date_var)
 		sprintf(day_s, "%d", day);
 
 	sprintf(date_var, "%d.%s.%s", ptr->tm_year + 1900, month_s, day_s);
-
-	//if (strlen(date_var) >= sizeof(date_var)) 		// handle Debug error here
-	//{
-	//	return NULL;
-	//} 
 
 	return date_var;
 }
