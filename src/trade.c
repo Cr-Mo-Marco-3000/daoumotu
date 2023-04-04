@@ -47,7 +47,7 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 		}
 		else if (type == 3)
 		{
-			sysetem("cls");
+			system("cls");
 			printf("현재 %s 님이 보유하고 계신 주식 잔고는 다음과 같습니다.\n\n", login_usr->name);
 			printf("종목번호\t보유수량");
 			printf("\n=====================================\n");
