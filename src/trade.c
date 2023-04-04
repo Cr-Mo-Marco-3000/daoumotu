@@ -154,7 +154,7 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 						printf("%s 님의 매수가 완료되었습니다. \n", login_usr->name);
 						printf("=====================================\n\n");
 						Sleep(1500);
-						system(cls)
+						system("cls");
 						break;
 					}
 					else
