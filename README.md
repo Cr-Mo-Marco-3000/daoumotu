@@ -4,7 +4,7 @@
 
 
 
-###  I. 디렉터리 및 파일구조 설명
+##  I. 디렉터리 및 파일구조 설명
 
 > 헤더파일 임포트, 소스파일 생성 시 파일 위치와 구조를 주의해주세요
 >
@@ -46,10 +46,26 @@
 
 
 
-- 파일 작성자
+## II. 파일 작성한 사람
+
+- 소스 파일
   - auth.c
     - 김현영
   - generic_function.c
     - 김현영, 정종오
   - main.c
-    - 다같이 조금씩 만
+    - 다같이 조금씩 만듦
+  - portfolio.c
+    - 김연준
+  - save_stock_hold_lst.c
+    - 정종오
+  - stock_detail.c
+    - 김현영
+  - stock_list.c
+    - 안도화
+  - tarde.c
+    - 정종오
+  - tradesearch.c
+    - 안도화
+- 헤더파일
+  - 다 같이 조금씩 만듦
