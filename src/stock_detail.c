@@ -5,7 +5,7 @@
 void graph(struct StockInfo **dateArr, int max, int min);
 void stockDescription(struct StockInfo **dateArr);
 
-void stock_detail() {
+void stock_detail(StockInfo *stockinfo) {
 	char stock_code[10];									// 차후 넘어올 것 
 	int cnt = 0;
 
@@ -13,7 +13,7 @@ void stock_detail() {
 	char tmp[200];
 	FILE *fp;
 	char *ptr;
-	int flag=1;
+	int flag = 1;
 	struct StockInfo *dateArr[20];						// 날짜별 정보를 담을 구조체 배열
 
 	printf("종목 코드를 입력해주세요.\n");
@@ -21,43 +21,29 @@ void stock_detail() {
 
 	while (getchar() != '\n');
 
-
-	fp = fopen("data/output.txt", "r");
-	if (fp == NULL) {
-		perror("Error");
-		exit(1);
-	}
-	while (fgets(tmp, 200, fp)) {
+	while (cnt <= 600) {
 		if (cnt == 20) {								// 20일치의 데이터만 보여줌
 			break;
 		}
 		ptr = strtok(tmp, "\t");
-		if (!strcmp(ptr, stock_code)) {						// 만약 종목코드가 동일하면 가져옴
+		if (strcmp(tmp, stockinfo->stock_code)) {						// 만약 종목코드가 동일하면 가져옴
 			flag = 0;
 			dateArr[cnt] = (struct StockInfo *)malloc(sizeof(StockInfo));
-			strcpy(dateArr[cnt]->stock_code, ptr);				// 종목코드 저장
-			
-			ptr = strtok(NULL, "\t");
-			strcpy(dateArr[cnt]->stock_name, ptr);
-			ptr = strtok(NULL, "\t");
-			strcpy(dateArr[cnt]->date, ptr);
-			ptr = strtok(NULL, "\t");
-			dateArr[cnt]->close = atoi(ptr);
-			ptr = strtok(NULL, "\t");
-			dateArr[cnt]->compare = atoi(ptr);
-			ptr = strtok(NULL, "\t");
-			dateArr[cnt]->open = atoi(ptr);
-			ptr = strtok(NULL, "\t");
-			dateArr[cnt]->high = atoi(ptr);
-			if (atoi(ptr) > max) max = atoi(ptr);
-			ptr = strtok(NULL, "\t");
-			dateArr[cnt]->low = atoi(ptr);
-			if (atoi(ptr) < min) min = atoi(ptr);
-			ptr = strtok(NULL, "\t");
-			dateArr[cnt]->volume= atoi(ptr);
+			strcpy(dateArr[cnt]->stock_code, stockinfo->stock_code);
+			strcpy(dateArr[cnt]->stock_name, stockinfo->stock_name);
+			strcpy(dateArr[cnt]->date, stockinfo->date);
+			dateArr[cnt]->close = stockinfo->close;
+			dateArr[cnt]->compare = stockinfo->compare;
+			dateArr[cnt]->open = stockinfo->open;
+			dateArr[cnt]->high = stockinfo->high;
+			dateArr[cnt]->low = stockinfo->low;
+			dateArr[cnt]->volume = stockinfo->volume;
+			if (stockinfo->high > max) max = stockinfo->high;
+			if (stockinfo->low < min) min = stockinfo->low;
 			cnt++;
-			}
+			stockinfo++;
 		}
+	}
 
 	if (flag) {
 		printf("찾으시는 주식 종목이 존재하지 않습니다.");
@@ -76,7 +62,7 @@ void stock_detail() {
 	}
 	printf("\n\n");
 	return;
-	
+
 }
 
 void graph(struct StockInfo **dateArr, int max, int min) {		// 포인터를 가리키는 포인터를 넘겨주자
@@ -117,71 +103,81 @@ void graph(struct StockInfo **dateArr, int max, int min) {		// 포인터를 가리키는
 
 		// 안쪽 값을 출력하는 조건을 주어야 한다. => 총 180컬럼
 		for (col = 0; col < 141; col++) {
-				if (!((col - 2) % 7)) {																			  // 만약 날짜가 있는 열이면 내부 조건으로 들어감
-					stockNow = 19 - (col - 2) / 7;
-					if (dateArr[stockNow]->close - dateArr[stockNow]->open > 0) {								  // 강세
-						if (dateArr[stockNow]->close < graphNow && graphNow <= dateArr[stockNow]->high) {		  // 기준가가 최고가와 종가 사이
-							SetConsoleTextAttribute(h_console, 4);
-							if (graphNow - interval < dateArr[stockNow]->open) {								  // 근데 가격차이가 interval만큼 안나면
-								flag = 2;
-							}
-						} else if (dateArr[stockNow]->open <= graphNow && graphNow <= dateArr[stockNow]->close) {	// 만약 시가와 종가 사이인데
-							if (dateArr[stockNow]->close - dateArr[stockNow]->open < interval) {					// 당일 변동이 interval 이하라면
-								SetConsoleTextAttribute(h_console, 4);												// 즉, 변동폭이 작으면
-								flag = 0;
-							} else {
-								SetConsoleTextAttribute(h_console, BACKGROUND_RED + 4);								// 변동폭이 크면 붉게 칠함
-							}
-						} else if (dateArr[stockNow]->low <= graphNow && graphNow < dateArr[stockNow]->open) {
-							SetConsoleTextAttribute(h_console, 4);
-							//if (graphNow + interval > dateArr[stockNow]->close) {					
-							//	flag = 0;
-							//}
+			if (!((col - 2) % 7)) {																			  // 만약 날짜가 있는 열이면 내부 조건으로 들어감
+				stockNow = 19 - (col - 2) / 7;
+				if (dateArr[stockNow]->close - dateArr[stockNow]->open > 0) {								  // 강세
+					if (dateArr[stockNow]->close < graphNow && graphNow <= dateArr[stockNow]->high) {		  // 기준가가 최고가와 종가 사이
+						SetConsoleTextAttribute(h_console, 4);
+						if (graphNow - interval < dateArr[stockNow]->open) {								  // 근데 가격차이가 interval만큼 안나면
+							flag = 2;
 						}
-						flag == 1 ? putchar('|') : flag == 2 ? putchar('+') : putchar('=');
-						SetConsoleTextAttribute(h_console, 0);														// 글자 + 배경 검은색으로 바꾸기
-						flag = 1;
-					} else if (dateArr[stockNow]->close - dateArr[stockNow]->open < 0) {								// 약세
-						if (dateArr[stockNow]->open < graphNow && graphNow <= dateArr[stockNow]->high) {
-							SetConsoleTextAttribute(h_console, 1);
-							//if (graphNow - interval < dateArr[stockNow]->close) {
-							//	flag = 0;
-							//}
-						} else if (dateArr[stockNow]->close <= graphNow && graphNow <= dateArr[stockNow]->open) {
-							if (dateArr[stockNow]->open - dateArr[stockNow]->close < interval)
-							{
-								SetConsoleTextAttribute(h_console, 1);
-								flag = 0;
-							} else {
-								SetConsoleTextAttribute(h_console, BACKGROUND_BLUE + 1);
-							}
-						} else if (dateArr[stockNow]->low <= graphNow && graphNow < dateArr[stockNow]->close) {
-							SetConsoleTextAttribute(h_console, 1);
-							if (graphNow + interval > dateArr[stockNow]->open) {
-								flag = 2;
-							}
+					}
+					else if (dateArr[stockNow]->open <= graphNow && graphNow <= dateArr[stockNow]->close) {	// 만약 시가와 종가 사이인데
+						if (dateArr[stockNow]->close - dateArr[stockNow]->open < interval) {					// 당일 변동이 interval 이하라면
+							SetConsoleTextAttribute(h_console, 4);												// 즉, 변동폭이 작으면
+							flag = 0;
 						}
-						flag == 1 ? putchar('|') : flag == 2 ? putchar('+') : putchar('=');
-						flag = 1;
-					} else {																						// 도지: 강세도 약세도 아닐 때
-						if (dateArr[stockNow]->low <= graphNow && graphNow <= dateArr[stockNow]->high) {			// 해당하면 하얀색
-							SetConsoleTextAttribute(h_console, 15);
-							if (dateArr[stockNow]->open <= graphNow + interval / 2 && dateArr[stockNow]->open > graphNow - interval / 2) {
-								putchar('=');
-							}
-							else {
-								putchar('|');
-							}
-						} else {
-							SetConsoleTextAttribute(h_console, 0);
+						else {
+							SetConsoleTextAttribute(h_console, BACKGROUND_RED + 4);								// 변동폭이 크면 붉게 칠함
+						}
+					}
+					else if (dateArr[stockNow]->low <= graphNow && graphNow < dateArr[stockNow]->open) {
+						SetConsoleTextAttribute(h_console, 4);
+						//if (graphNow + interval > dateArr[stockNow]->close) {					
+						//	flag = 0;
+						//}
+					}
+					flag == 1 ? putchar('|') : flag == 2 ? putchar('+') : putchar('=');
+					SetConsoleTextAttribute(h_console, 0);														// 글자 + 배경 검은색으로 바꾸기
+					flag = 1;
+				}
+				else if (dateArr[stockNow]->close - dateArr[stockNow]->open < 0) {								// 약세
+					if (dateArr[stockNow]->open < graphNow && graphNow <= dateArr[stockNow]->high) {
+						SetConsoleTextAttribute(h_console, 1);
+						//if (graphNow - interval < dateArr[stockNow]->close) {
+						//	flag = 0;
+						//}
+					}
+					else if (dateArr[stockNow]->close <= graphNow && graphNow <= dateArr[stockNow]->open) {
+						if (dateArr[stockNow]->open - dateArr[stockNow]->close < interval)
+						{
+							SetConsoleTextAttribute(h_console, 1);
+							flag = 0;
+						}
+						else {
+							SetConsoleTextAttribute(h_console, BACKGROUND_BLUE + 1);
+						}
+					}
+					else if (dateArr[stockNow]->low <= graphNow && graphNow < dateArr[stockNow]->close) {
+						SetConsoleTextAttribute(h_console, 1);
+						if (graphNow + interval > dateArr[stockNow]->open) {
+							flag = 2;
+						}
+					}
+					flag == 1 ? putchar('|') : flag == 2 ? putchar('+') : putchar('=');
+					flag = 1;
+				}
+				else {																						// 도지: 강세도 약세도 아닐 때
+					if (dateArr[stockNow]->low <= graphNow && graphNow <= dateArr[stockNow]->high) {			// 해당하면 하얀색
+						SetConsoleTextAttribute(h_console, 15);
+						if (dateArr[stockNow]->open <= graphNow + interval / 2 && dateArr[stockNow]->open > graphNow - interval / 2) {
+							putchar('=');
+						}
+						else {
 							putchar('|');
 						}
 					}
-				} else {
-					SetConsoleTextAttribute(h_console, 0);
-					putchar('|');
+					else {
+						SetConsoleTextAttribute(h_console, 0);
+						putchar('|');
+					}
 				}
 			}
+			else {
+				SetConsoleTextAttribute(h_console, 0);
+				putchar('|');
+			}
+		}
 		SetConsoleTextAttribute(h_console, 0);	// 그래프 바깥쪽에도, 0을 넣어 검은색으로 출력해 주어야 색이 번지지 않음
 		putchar('|');
 		puts("");
@@ -209,7 +205,7 @@ void graph(struct StockInfo **dateArr, int max, int min) {		// 포인터를 가리키는
 
 	printf("\t      ");
 	printf("- 해당 기준 가격이 시가와 종가 사이에 있을 때는 면으로, 고가와 저가 사이에 있을 때는 선으로 표시합니다.\n");
-	
+
 	putchar('\n');
 	printf("\t      ");
 	printf("- 약세 또는 강세일 때\n");
@@ -219,7 +215,7 @@ void graph(struct StockInfo **dateArr, int max, int min) {		// 포인터를 가리키는
 	printf("	2) -는 해당 기준 가격이 종가보타 크고, (기준 가격 - 인터벌)보다 시가가 클 때, 즉 시가와 종가의 차이가 인터벌보다 적을 때를 나타냅니다. \n");
 	printf("\t      ");
 	printf("	3) +는 해당 기준 가격이 종가보타 작고, (기준 가격 + 인터벌)보다 시가가 작을 때, 즉 시가와 종가의 차이가 인터벌보다 적을 때를 나타냅니다. \n");
-	
+
 	putchar('\n');
 	printf("\t      ");
 	printf("- 도지(시가 = 종가)일 때\n");
