@@ -16,18 +16,16 @@ typedef struct User {
 } USER;
 */
 
-
+// 로그인 시 유저 리스트를 연결 리스트로 만드는 함수
 void loadList(USER** user, USER **head, USER **tail) {	// user에는, 포인터를 가리키는 포인터가 담김, 현재 그 포인터는 userTemp를 가리키고 있음, userTemp를 검사해서, 
 	char tmp[200];
 	USER *ptr;
 	FILE *fp;
 	fp = fopen("data/user.txt", "r");
-	
 	if (fp == NULL) {
 		perror("Error");
 		exit(1);
 	}
-
 	while (1) {
 		ptr = (USER *)malloc(sizeof(USER));			// 구조체 동적할당
 		if (ptr == NULL) {
@@ -51,8 +49,7 @@ void loadList(USER** user, USER **head, USER **tail) {	// user에는, 포인터를 가�
 
 		if (*head == NULL) {						// 만약 head에 없으면
 			*head = *tail = ptr;
-		}
-		else {
+		} else {
 			(*tail)->next = ptr;
 			(*tail) = ptr;
 		}
