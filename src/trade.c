@@ -209,6 +209,7 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 		printf("종목이름\t(종목번호)\t\t|\t보유수량");
 		printf("\n========================================|=================\n");
 		i = 0;
+		cnt = 0;
 
 		while (login_usr_stock[i].member_num)
 		{
@@ -218,6 +219,7 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 				if (strcmp(login_usr_stock[i].code, entire_stock_info[j].stock_code) == 0)
 				{
 					printf("%-16s(%s)\t\t|\t%5d\n", entire_stock_info[j].stock_name, login_usr_stock[i].code, login_usr_stock[i].quantity);
+					cnt++;
 					break;
 				}
 				j++;
@@ -228,7 +230,7 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 		printf("매도할 종목의 종목번호를 입력하시오. ( -1 : main함수로 복귀) : ");
 		gets(sell_stock_num);
 
-		cnt = 0;
+
 
 		if (atoi(sell_stock_num) == -1)
 			return;
@@ -243,7 +245,8 @@ void sell_stock(USER* login_usr, Stock* entire_usr_stock, Stock* login_usr_stock
 					while (1)
 					{
 						system("cls");
-						printf("해당 주식의 현재가격은 %d입니다.\n 현재 %s 님은 해당 주식을 %d주 보유하고 있습니다.\n", market_price, login_usr->name, login_usr_stock[i].quantity);
+						printf("\n\n\n\=====================================\n");
+						printf("해당 주식의 현재가격은 % d입니다.\n 현재 % s 님은 해당 주식을 % d주 보유하고 있습니다.\n", market_price, login_usr->name, login_usr_stock[i].quantity);
 						printf("판매할 수량을 입력해주세요 : \t");
 						scanf("%d%*c", &sell_stock_cnt);
 						printf("판매할 금액을 입력해주세요 : \t");
