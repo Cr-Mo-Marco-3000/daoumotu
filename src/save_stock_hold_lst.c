@@ -12,6 +12,7 @@ void savestockholdlst(Stock* entire_usr_stock)
 	{
 		fprintf(fp_save_stock, "%d\t%s\t%d\n", entire_usr_stock[i].member_num, entire_usr_stock[i].code, entire_usr_stock[i].quantity);
 		printf("%s\n", entire_usr_stock[i].code);
+		i++;
 	}
 
 	fclose(fp_save_stock);
