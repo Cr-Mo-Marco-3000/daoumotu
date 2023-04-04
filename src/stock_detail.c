@@ -8,12 +8,9 @@ void stockDescription(struct StockInfo **dateArr);
 void stock_detail(StockInfo *stockinfo) {
 	char stock_code[10];									// 차후 넘어올 것 
 	int cnt = 0;
-
 	int max = 0, min = 1000000000;
-	char tmp[200];
-	FILE *fp;
-	char *ptr;
 	int flag = 1;
+	int checknum = 0;
 	struct StockInfo *dateArr[20];						// 날짜별 정보를 담을 구조체 배열
 
 	printf("종목 코드를 입력해주세요.\n");
@@ -21,12 +18,11 @@ void stock_detail(StockInfo *stockinfo) {
 
 	while (getchar() != '\n');
 
-	while (cnt <= 600) {
+	while (checknum <= 600) {
 		if (cnt == 20) {								// 20일치의 데이터만 보여줌
 			break;
 		}
-		ptr = strtok(tmp, "\t");
-		if (strcmp(tmp, stockinfo->stock_code)) {						// 만약 종목코드가 동일하면 가져옴
+		if (!strcmp(stock_code, stockinfo->stock_code)) {						// 만약 종목코드가 동일하면 가져옴
 			flag = 0;
 			dateArr[cnt] = (struct StockInfo *)malloc(sizeof(StockInfo));
 			strcpy(dateArr[cnt]->stock_code, stockinfo->stock_code);
@@ -41,8 +37,9 @@ void stock_detail(StockInfo *stockinfo) {
 			if (stockinfo->high > max) max = stockinfo->high;
 			if (stockinfo->low < min) min = stockinfo->low;
 			cnt++;
-			stockinfo++;
 		}
+		stockinfo++;
+		checknum++;
 	}
 
 	if (flag) {
