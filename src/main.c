@@ -130,7 +130,7 @@ int main(void)
 
 				// 여기 저장이 들어가야 함
 				saveList(start);
-				savestockholdlst(stock);
+				//savestockholdlst(stock);
 				// 다음으로는 유저 포인터 초기화 및 HEAD 초기화
 				user = &usertemp;
 				start = end = NULL;			// 다시 로그인 시, 유저 배열을 만들기위해 NULL로 바꿔줌

@@ -15,7 +15,7 @@ void entire_stock_lst(StockInfo* entire_stock_info, char* stock_lst[50]);
 void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_info)
 {
 	Stock login_usr_stock[100];
-	char stock_lst[STOCK_ALL_CNT][50];
+	char stock_lst[STOCK_ALL_CNT+5][50] ;
 	entire_stock_lst(entire_stock_info, stock_lst);
 
 	int flag_type = 1;
@@ -24,13 +24,6 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 	int i = 0;
 
 	user_stock_hold_lst(login_usr, entire_user_stock, login_usr_stock);
-
-	//while (login_usr_stock[i].member_num)
-	//{
-	//	printf("%s\n", login_usr_stock[i].code);
-	//	i++;
-	//}
-	//i = 0;
 
 	while (flag_type)
 	{
@@ -157,9 +150,11 @@ void buy_stock(USER* login_usr, Stock* entire_usr_stock, StockInfo* entire_stock
 
 						buy_flag = 0;
 						system("cls");
-						printf("\n\n\n\n=====================================");
+						printf("\n\n\n\n=====================================\n");
 						printf("%s 님의 매수가 완료되었습니다. \n", login_usr->name);
-						printf("=====================================");
+						printf("=====================================\n\n");
+						Sleep(1500);
+						system(cls)
 						break;
 					}
 					else
@@ -448,7 +443,7 @@ void entire_stock_lst(StockInfo* entire_stock_info, char(*stock_lst)[50])
 	{
 		if (strcmp(entire_stock_info[i].date, entire_stock_info[0].date) == 0)
 		{
-			strcpy(stock_lst[cnt], entire_stock_info[i].stock_code);
+			memmove(stock_lst[cnt], entire_stock_info[i].stock_code, sizeof(entire_stock_info[i].stock_code));
 			cnt += 1;
 		}
 		i++;
