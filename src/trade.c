@@ -24,10 +24,10 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 	int i = 0;
 
 	user_stock_hold_lst(login_usr, entire_user_stock, login_usr_stock);
+	system("cls");
 
 	while (flag_type)
 	{
-		system("cls");
 		printf("\n\n=================================================\n");
 		printf("매매 유형을 선택해주세요. \n( 1 : 매수 , 2 : 매도, 3 : 현재 주식잔고 출력, -1 : main함수로 복귀)\n");
 		printf("=================================================\n\n");
@@ -47,7 +47,7 @@ void trade(USER* login_usr, Stock* entire_user_stock, StockInfo* entire_stock_in
 		}
 		else if (type == 3)
 		{
-			system("cls");
+
 			printf("현재 %s 님이 보유하고 계신 주식 잔고는 다음과 같습니다.\n\n", login_usr->name);
 			printf("종목번호\t보유수량");
 			printf("\n=====================================\n");
