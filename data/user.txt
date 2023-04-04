@@ -1,4 +1,4 @@
-1   daou_khy    daou1   kimdaou 8544000
-2   daou_kyj    daou2   kimdaou 9974950
-3   daou_adh    daou3   ahndaou 7740912
-4   daou_jjo    daou4   jeongdaou   3358300
+1	daou_khy	 daou1	kimdaou	8544000
+2	daou_kyj	 daou2	kimdaou	9974950
+3	daou_adh	 daou3	ahndaou	7740912
+4	daou_jjo	 daou4	jeongdaou	3358300
