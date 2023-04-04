@@ -5,28 +5,45 @@
 
 int main(void)
 {
+	FILE *st, *pr, *fp;
+	StockInfo tmp[600] = { 0 };
+	Stock stock[100] = { 0 };
+	char trs[200];
+	USER *user;
 	USER usertemp = { -1 }; // 임시 더미 회원
+	USER *start = NULL, *end = NULL;		// 회원 연결 리스트의 시작과 끝 주소 
+	int choose;
+	StockInfo stockInfoList[500];
+	char print_tmp[256];
+	HANDLE h_console = GetStdHandle(STD_OUTPUT_HANDLE); // 색상 조작을 도와줄 핸들
+	fp = fopen("data/pictogram.txt", "r");
 
-	USER* user;
+	puts("");
+	SetConsoleTextAttribute(h_console, 4); // => 글자 빨간색
+	if (fp == NULL)
+	{
+		printf("파일 불러오기 실패 \n");
+		return 1;
+	}
+	while (fgets(print_tmp, 255, fp) != NULL) {
+		printf(print_tmp);
+		if (print_tmp[9] == ' ') {
+			SetConsoleTextAttribute(h_console, 1); // => 글자 파란색 |에 사용
+		}
+	}
+	SetConsoleTextAttribute(h_console, 15);
+	fclose(fp);
 
 	user = &usertemp;
 
-	USER* start = NULL, * end = NULL;		// 회원 연결 리스트의 시작과 끝 주소 
-
-	int choose;
-
 	// 주식 배열 리스트
-	StockInfo stockInfoList[500];
 
 
 	// 주식 배열 담는 함수
 
 
 	//  파일을 구조체 배열에 담기
-	StockInfo tmp[600] = { 0 };
-	Stock stock[100] = { 0 };
-	FILE* st, * pr;
-	char trs[200];
+
 	st = fopen("data/stock.txt", "rt");
 	if (st == NULL) {
 		perror("ERROR");
@@ -67,7 +84,8 @@ int main(void)
 	// 전체 루프
 	while (1) {
 		if (start == NULL) {	// 로그인이 안 된 상태
-			printf("서비스에 연결하려면 1, 종료하려면 2를 입력해주세요.\n");
+			Sleep(1000);
+			printf("\n서비스에 연결하려면 1, 종료하려면 2를 입력해주세요.\n");
 			choose = getchar();
 			while (getchar() != '\n');
 			if (choose == '1') {
@@ -85,7 +103,7 @@ int main(void)
 			}
 		}
 		else {
-			puts("이용하실 서비스를 선택해 주세요");
+			puts("\n이용하실 서비스를 선택해 주세요\n");
 			printf("==================================\n");
 			printf("1. 모든 주식 정보 조회\n");
 			printf("서비스에 등록된 모든 주식의 20일치 정보를 조회합니다.\n");
@@ -104,7 +122,8 @@ int main(void)
 			putchar('\n');
 			printf("0. 로그아웃\n");
 			printf("서비스에서 로그아웃합니다.\n");
-			printf("==================================\n서비스 번호 입력 : ");
+			Sleep(500);
+			printf("\n==================================\n서비스 번호 입력 : ");
 			scanf("%d", &choose);
 			while (getchar() != '\n');
 
@@ -134,7 +153,7 @@ int main(void)
 				// 다음으로는 유저 포인터 초기화 및 HEAD 초기화
 				user = &usertemp;
 				start = end = NULL;			// 다시 로그인 시, 유저 배열을 만들기위해 NULL로 바꿔줌
-				puts("로그아웃합니다.");
+				puts("\n로그아웃합니다.\n");
 				Sleep(1000);
 			}
 		}
